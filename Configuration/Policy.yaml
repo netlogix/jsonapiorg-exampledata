@@ -1,0 +1,18 @@
+#                                                                        #
+# Security policy for the Neos package                             #
+#                                                                        #
+
+privilegeTargets:
+
+  'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+
+    'Netlogix.JsonApiOrg.ExampleData:AllControllerActions':
+      matcher: 'method(Netlogix\JsonApiOrg\ExampleData\Controller\NodeController->(.*)Action())'
+
+roles:
+
+  'TYPO3.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'Netlogix.JsonApiOrg.ExampleData:AllControllerActions'
+        permission: GRANT
