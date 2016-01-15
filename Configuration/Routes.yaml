@@ -2,11 +2,23 @@
 # "Service" subroutes configuration for the TYPO3.Neos package           #
 #                                                                        #
 
+
+# The demo action
+
+-
+  name: 'NetlogixJsonApiOrgExampleDataSubroutes'
+  uriPattern: ''
+  defaults:
+    '@package':    'Netlogix.JsonApiOrg.ExampleData'
+    '@controller': 'Node'
+    '@action':     'demo'
+    '@format':     'html'
+
 # RESTful routes for Nodes service
 
 -
   name: 'Nodes - index'
-  uriPattern: ''
+  uriPattern: 'nodes'
   defaults:
     '@package':    'Netlogix.JsonApiOrg.ExampleData'
     '@controller': 'Node'
@@ -15,7 +27,7 @@
 
 -
   name: 'Nodes - show'
-  uriPattern: '{node}'
+  uriPattern: 'nodes/{node}'
   defaults:
     '@package':    'Netlogix.JsonApiOrg.ExampleData'
     '@controller': 'Node'
@@ -24,7 +36,7 @@
 
 -
   name: 'Nodes - relationship'
-  uriPattern: '{node}/relationships/{relationshipName}'
+  uriPattern: 'nodes/{node}/relationships/{relationshipName}'
   defaults:
     '@package':    'Netlogix.JsonApiOrg.ExampleData'
     '@controller': 'Node'
@@ -33,7 +45,7 @@
 
 -
   name: 'Nodes - related'
-  uriPattern: '{node}/{relationshipName}'
+  uriPattern: 'nodes/{node}/{relationshipName}'
   defaults:
     '@package':    'Netlogix.JsonApiOrg.ExampleData'
     '@controller': 'Node'
