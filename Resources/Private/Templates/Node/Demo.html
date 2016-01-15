@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="netlogix.exampledata" ng-controller="AppCtrl as App">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>sdfsdf</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+	<script type="text/javascript" src="{f:uri.resource(path: 'resource://Netlogix.JsonApiOrg.ExampleData/Public/Scripts/json-api-store/store.dev.js')}"></script>
+
+	<script type="text/javascript">
+		var app = angular.module('netlogix.exampledata', []);
+		app.controller('AppCtrl', AppCtrl);
+
+		function AppCtrl($timeout) {
+			var self = this;
+			self.nodes = [];
+
+			var adapter = new Store.AjaxAdapter({ base: "/example-data" });
+			var store = new Store(adapter);
+
+			store.define([ "nodes", "node" ], {
+				title: Store.attr(),
+				parent: Store.hasOne(),
+				children: Store.hasMany()
+			});
+
+			this.loadAll = function() {
+				self.nodes.$loading = true;
+				store.loadAll("nodes", {include: "parent"}).subscribe(function (nodes) {
+					$timeout(function () {
+						self.nodes = nodes;
+					});
+				});
+			};
+
+			this.createNew = function(title, parent) {
+				store.create('nodes', {title: title, parent: parent}).subscribe(function(result) {
+					$timeout(function () {
+						self.nodes.push(result);
+					});
+				});
+			};
+
+			return self;
+		}
+
+	</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Demo ...</h1>
+
+		<div class="form-group row">
+			<div class="col-md-3">
+				<a class="btn btn-default col-md-12" ng-click="App.loadAll()">Load All</a>
+			</div>
+
+		</div>
+		<div class="form-group row">
+			<div class="col-md-3">
+				<a class="btn btn-default col-md-12" ng-click="App.createNew(newModelTitle, newModelParent)">Create a new node</a>
+			</div>
+			<div class="col-md-9">
+				<input class="form-control" ng-init="newModelTitle = 'New node title'" ng-model="newModelTitle">
+			</div>
+			<div class="col-md-9">
+				<select ng-model="newModelParent" ng-options="node.title for node in App.nodes"></select>
+			</div>
+		</div>
+
+		<ul>
+			<li>
+				<h2>All Nodes</h2>
+				<p>
+					Number of dispalyed nodes: {{App.nodes.length}}
+					Currently loading: {{App.nodes.$loading ? 'yes' : 'no'}}
+				</p>
+
+				<div ng-repeat="node in App.nodes">
+					<h3>{{node.title}}</h3>
+					<p>{{node.parent.title}}</p>
+				</div>
+			</li>
+		</ul>
+
+	</div>
+</body>
+</html>
