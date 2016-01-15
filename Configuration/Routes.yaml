@@ -1,0 +1,41 @@
+#                                                                        #
+# "Service" subroutes configuration for the TYPO3.Neos package           #
+#                                                                        #
+
+# RESTful routes for Nodes service
+
+-
+  name: 'Nodes - index'
+  uriPattern: ''
+  defaults:
+    '@package':    'Netlogix.JsonApiOrg.ExampleData'
+    '@controller': 'Node'
+    '@action':     'index'
+    '@format':     'json'
+
+-
+  name: 'Nodes - show'
+  uriPattern: '{node}'
+  defaults:
+    '@package':    'Netlogix.JsonApiOrg.ExampleData'
+    '@controller': 'Node'
+    '@action':     'index'
+    '@format':     'json'
+
+-
+  name: 'Nodes - relationship'
+  uriPattern: '{node}/relationships/{relationshipName}'
+  defaults:
+    '@package':    'Netlogix.JsonApiOrg.ExampleData'
+    '@controller': 'Node'
+    '@action':     'index'
+    '@format':     'json'
+
+-
+  name: 'Nodes - related'
+  uriPattern: '{node}/{relationshipName}'
+  defaults:
+    '@package':    'Netlogix.JsonApiOrg.ExampleData'
+    '@controller': 'Node'
+    '@action':     'showRelated'
+    '@format':     'json'

@@ -1,0 +1,20 @@
+#                                                                        #
+# Object Configuration for the Flow Framework                            #
+#                                                                        #
+# This file contains additions to the base configuration for the         #
+# Flow Framework when it runs in Testing context.                        #
+#                                                                        #
+
+
+#                                                                        #
+# I'm not completely sure for this to be the very best way to configure  #
+# mapping, but there are situations wher a single PHP class needs to be  #
+# mapped to different JS objects.                                        #
+#                                                                        #
+
+Netlogix\JsonApiOrg\Resource\Information\ExposableTypeMap:
+  properties:
+
+    oneToOneTypeToClassMap:
+      value:
+        'Netlogix\JsonApiOrg\ExampleData\Domain\Model\Node': 'nodes'
